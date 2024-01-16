@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "fir-vue-startup-kit"
+    "default": "slashgpt-874e6"
+  },
+  "targets": {
+    "slashgpt-874e6": {
+      "hosting": {
+        "app": [
+          "slashgpt-874e6"
+        ]
+      }
+    }
   }
 }

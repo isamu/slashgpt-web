@@ -1,30 +1,116 @@
 <template>
   <div class="home">
-    <div class="flex items-center justify-center space-x-8">
-      <!-- Use Tailwind CSS h-40 (=10rem=160px) instead of .logo. -->
-      <img alt="Firebase logo" src="../assets/firebase.svg" class="h-40 object-contain" />
-
-      <!-- Use Tailwind CSS h-40 (=10rem=160px) instead of .logo. -->
-      <img alt="Vue logo" src="../assets/logo.png" class="h-40" />
-
-      <svg class="text-tailwindcss-logo-mark w-40 fill-current" viewBox="0 0 50 32">
-        <path
-          d="M25.517 0C18.712 0 14.46 3.382 12.758 10.146c2.552-3.382 5.529-4.65 8.931-3.805 1.941.482 3.329 1.882 4.864 3.432 2.502 2.524 5.398 5.445 11.722 5.445 6.804 0 11.057-3.382 12.758-10.145-2.551 3.382-5.528 4.65-8.93 3.804-1.942-.482-3.33-1.882-4.865-3.431C34.736 2.92 31.841 0 25.517 0zM12.758 15.218C5.954 15.218 1.701 18.6 0 25.364c2.552-3.382 5.529-4.65 8.93-3.805 1.942.482 3.33 1.882 4.865 3.432 2.502 2.524 5.397 5.445 11.722 5.445 6.804 0 11.057-3.381 12.758-10.145-2.552 3.382-5.529 4.65-8.931 3.805-1.941-.483-3.329-1.883-4.864-3.432-2.502-2.524-5.398-5.446-11.722-5.446z"
-        />
-      </svg>
+    <div class="">
+      <div>
+        title: <input class="flex-grow p-2 border rounded-md mt-2" v-model="title" />
+      </div>
+      <div>
+        description
+        <textarea class="flex-grow p-2 border rounded-md mt-2"></textarea>
+      </div>
+      <div>
+        prompt
+        <textarea class="flex-grow p-2 border rounded-md mt-2" v-model="prompt"></textarea>
+      </div>
+      <div>
+        temperature: <input class="flex-grow p-2 border rounded-md mt-2" />
+      </div>
+      <div>
+        function
+        
+      </div>
+      
     </div>
-    <HelloWorld />
+    
+    <div>
+      api key: <input class="flex-grow p-2 border rounded-md mt-2" v-model="apiKey" />
+    </div>
+    <hr class="border-1 mt-2" />
+    <div>
+      <div>
+        message
+        <textarea class="flex-grow p-2 border rounded-md mt-2" v-model="message"></textarea>
+      </div>
+      {{ last_message }}
+    </div>
+    <div>
+      <button @click="test" class="flex-grow p-2 border rounded-md mt-2">test</button>
+    </div>
+
+    <hr class="border-1 mt-2" />
+    manifest<br/>
+    <textarea class="flex-grow p-2 border rounded-md mt-2" :value="JSON.stringify(manifest)" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { defineComponent, ref, watch, computed } from "vue";
+import { ManifestData, ChatData } from "slashgpt";
+
+import { call_llm } from "./llm";
 
 export default defineComponent({
   name: "HomePage",
   components: {
-    HelloWorld,
+  },
+  setup(){
+    const apiKey = ref(localStorage.getItem("apiKey") ?? "");
+    
+    const title = ref(localStorage.getItem("title") ?? "");
+    const prompt = ref(localStorage.getItem("prompt") ?? "");
+
+
+    const message = ref(localStorage.getItem("message") ?? "");
+    const last_message = ref<ChatData | undefined>(undefined);
+    
+    
+    const manifest = computed(() => {
+      return {
+        title: title.value,
+        prompt: [prompt.value],
+        about: "",
+        bot: "",
+        temperature: 0.7,
+        actions: {},
+        sample: "",
+
+      } as ManifestData;
+    });
+    const test = async () => {
+      console.log("TEST");
+      const res = await call_llm(apiKey.value, message.value, manifest.value);
+      last_message.value = res.last_message;
+    };
+
+    watch(apiKey, () => {
+      localStorage.setItem("apiKey", apiKey.value)
+    });
+    watch(title, () => {
+      localStorage.setItem("title", title.value)
+    });
+    watch(prompt, () => {
+      localStorage.setItem("prompt", prompt.value)
+    });
+
+    watch(message, () => {
+      localStorage.setItem("message", message.value)
+    });
+
+    return {
+      apiKey,
+      title,
+      prompt,
+      message,
+
+      manifest,
+      last_message,
+      
+      test,
+
+      
+      
+    };
+
   },
 });
 </script>
