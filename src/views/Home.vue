@@ -1,45 +1,57 @@
 <template>
   <div class="home">
-    <div class="">
+    <div class="w-10/12 m-auto">
       <div>
-        title: <input class="flex-grow p-2 border rounded-md mt-2" v-model="title" />
+        <div class="text-left font-bold">Title</div>
+        <div>
+          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="title" />
+        </div>
       </div>
       <div>
-        description
-        <textarea class="flex-grow p-2 border rounded-md mt-2"></textarea>
+        <div class="text-left font-bold">Description</div>
+        <div>
+          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full"></textarea>
+        </div>
       </div>
       <div>
-        prompt
-        <textarea class="flex-grow p-2 border rounded-md mt-2" v-model="prompt"></textarea>
+        <div class="text-left font-bold">Prompt</div>
+        <div>
+          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
+        </div>
       </div>
       <div>
-        temperature: <input class="flex-grow p-2 border rounded-md mt-2" />
+        <div class="text-left font-bold">Temperature</div>
+        <div>
+          <input class="flex-grow p-2 border rounded-md mt-2 w-full" />
+        </div>
       </div>
-      <div>
-        function
-        
-      </div>
-      
-    </div>
-    
-    <div>
-      api key: <input class="flex-grow p-2 border rounded-md mt-2" v-model="apiKey" />
-    </div>
-    <hr class="border-1 mt-2" />
-    <div>
-      <div>
-        message
-        <textarea class="flex-grow p-2 border rounded-md mt-2" v-model="message"></textarea>
-      </div>
-      {{ last_message }}
-    </div>
-    <div>
-      <button @click="test" class="flex-grow p-2 border rounded-md mt-2">test</button>
-    </div>
 
-    <hr class="border-1 mt-2" />
-    manifest<br/>
-    <textarea class="flex-grow p-2 border rounded-md mt-2" :value="JSON.stringify(manifest)" />
+      <div>function</div>
+
+      <div>
+        <div class="text-left font-bold">API key</div>
+        <div>
+          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
+        </div>
+      </div>
+      <hr class="border-1 mt-2 w-full" />
+      <div>
+        <div>
+          <div class="text-left font-bold">Message</div>
+          <div>
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="message" rows="8"></textarea>
+          </div>
+        </div>
+        {{ last_message }}
+      </div>
+      <div>
+        <button @click="test" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Test</button>
+      </div>
+
+      <hr class="border-1 mt-2 w-full" />
+      manifest<br />
+      <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
+    </div>
   </div>
 </template>
 
@@ -51,19 +63,16 @@ import { call_llm } from "./llm";
 
 export default defineComponent({
   name: "HomePage",
-  components: {
-  },
-  setup(){
+  components: {},
+  setup() {
     const apiKey = ref(localStorage.getItem("apiKey") ?? "");
-    
+
     const title = ref(localStorage.getItem("title") ?? "");
     const prompt = ref(localStorage.getItem("prompt") ?? "");
 
-
     const message = ref(localStorage.getItem("message") ?? "");
     const last_message = ref<ChatData | undefined>(undefined);
-    
-    
+
     const manifest = computed(() => {
       return {
         title: title.value,
@@ -73,7 +82,6 @@ export default defineComponent({
         temperature: 0.7,
         actions: {},
         sample: "",
-
       } as ManifestData;
     });
     const test = async () => {
@@ -83,17 +91,17 @@ export default defineComponent({
     };
 
     watch(apiKey, () => {
-      localStorage.setItem("apiKey", apiKey.value)
+      localStorage.setItem("apiKey", apiKey.value);
     });
     watch(title, () => {
-      localStorage.setItem("title", title.value)
+      localStorage.setItem("title", title.value);
     });
     watch(prompt, () => {
-      localStorage.setItem("prompt", prompt.value)
+      localStorage.setItem("prompt", prompt.value);
     });
 
     watch(message, () => {
-      localStorage.setItem("message", message.value)
+      localStorage.setItem("message", message.value);
     });
 
     return {
@@ -104,13 +112,9 @@ export default defineComponent({
 
       manifest,
       last_message,
-      
+
       test,
-
-      
-      
     };
-
   },
 });
 </script>
