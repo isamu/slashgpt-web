@@ -1,56 +1,63 @@
 <template>
   <div class="home">
-    <div class="w-10/12 m-auto">
-      <div>
-        <div class="text-left font-bold">Title</div>
-        <div>
-          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="title" />
-        </div>
-      </div>
-      <div>
-        <div class="text-left font-bold">Description</div>
-        <div>
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full"></textarea>
-        </div>
-      </div>
-      <div>
-        <div class="text-left font-bold">Prompt</div>
-        <div>
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
-        </div>
-      </div>
-      <div>
-        <div class="text-left font-bold">Temperature</div>
-        <div>
-          <input class="flex-grow p-2 border rounded-md mt-2 w-full" />
-        </div>
-      </div>
-
-      <div>function</div>
-
-      <div>
-        <div class="text-left font-bold">API key</div>
-        <div>
-          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
-        </div>
-      </div>
-      <hr class="border-1 mt-2 w-full" />
-      <div>
-        <div>
-          <div class="text-left font-bold">Message</div>
+    <div class="w-10/12 m-auto flex">
+      <div class="w-1/2">
+        <div class="border-2 p-2 m-2 rounded-xl border-2">
+          Manifest
           <div>
-            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="message" rows="8"></textarea>
+            <div class="text-left font-bold">Title</div>
+            <div>
+              <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="title" />
+            </div>
+          </div>
+          <div>
+            <div class="text-left font-bold">Description</div>
+            <div>
+              <textarea class="flex-grow p-2 border rounded-md mt-2 w-full"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="text-left font-bold">Prompt</div>
+            <div>
+              <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
+            </div>
+          </div>
+          <div>
+            <div class="text-left font-bold">Temperature</div>
+            <div>
+              <input class="flex-grow p-2 border rounded-md mt-2 w-full" />
+            </div>
+          </div>
+
+          <div>function</div>
+
+          <div>
+            <div class="text-left font-bold">API key</div>
+            <div>
+              <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
+            </div>
+          </div>
+
+          manifest<br />
+          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
+        </div>
+      </div>
+      <div class="w-1/2">
+        <div class="border-2 p-2 rounded-xl border-2 m-2">
+          <div>
+            <div>
+              <div class="text-left font-bold">Message</div>
+              <div>
+                <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="message" rows="8"></textarea>
+              </div>
+            </div>
+            {{ last_message }}
+          </div>
+          <div>
+            <button @click="test" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Test</button>
           </div>
         </div>
-        {{ last_message }}
       </div>
-      <div>
-        <button @click="test" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Test</button>
-      </div>
-
-      <hr class="border-1 mt-2 w-full" />
-      manifest<br />
-      <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
     </div>
   </div>
 </template>
