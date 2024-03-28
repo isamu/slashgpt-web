@@ -30,6 +30,9 @@
           </div>
 
           <div>function</div>
+          <div>
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="functions" rows="10"></textarea>
+          </div>
 
           <div>
             <div class="text-left font-bold">API key</div>
@@ -47,11 +50,19 @@
           <div>
             <div>
               <div class="text-left font-bold">Message</div>
+              <div v-for="(message, k) in messages" key="k" class="text-left">
+                <div v-if="message.role === 'user'"><b>You</b>: {{ message.content }}</div>
+                <div v-if="message.role === 'assistant'">
+                  <b>GPT</b>:
+                  {{ message.content }}
+                  <pre>{{ message.function_data }}</pre>
+                </div>
+              </div>
               <div>
-                <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="message" rows="8"></textarea>
+                <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="message" rows="5"></textarea>
               </div>
             </div>
-            {{ last_message }}
+            <input type="checkbox" v-model="save_history" />History
           </div>
           <div>
             <button @click="test" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Test</button>
@@ -77,8 +88,21 @@ export default defineComponent({
     const title = ref(localStorage.getItem("title") ?? "");
     const prompt = ref(localStorage.getItem("prompt") ?? "");
 
+    const functions = ref(localStorage.getItem("functions") ?? "");
+
     const message = ref(localStorage.getItem("message") ?? "");
     const last_message = ref<ChatData | undefined>(undefined);
+    const messages = ref<ChatData[]>([]);
+    const save_history = ref(true);
+
+    const function_object = computed(() => {
+      try {
+        return JSON.parse(functions.value);
+      } catch (e) {
+        return {};
+      }
+      // return functions.value
+    });
 
     const manifest = computed(() => {
       return {
@@ -88,12 +112,15 @@ export default defineComponent({
         bot: "",
         temperature: 0.7,
         actions: {},
+        functions: function_object.value,
         sample: "",
       } as ManifestData;
     });
     const test = async () => {
       console.log("TEST");
-      const res = await call_llm(apiKey.value, message.value, manifest.value);
+      
+      const res = await call_llm(apiKey.value, message.value, manifest.value, save_history.value ? messages.value : []);
+      messages.value = (res.messages || []).slice(1);
       last_message.value = res.last_message;
     };
 
@@ -106,6 +133,9 @@ export default defineComponent({
     watch(prompt, () => {
       localStorage.setItem("prompt", prompt.value);
     });
+    watch(functions, () => {
+      localStorage.setItem("functions", functions.value);
+    });
 
     watch(message, () => {
       localStorage.setItem("message", message.value);
@@ -116,9 +146,12 @@ export default defineComponent({
       title,
       prompt,
       message,
+      functions,
 
       manifest,
       last_message,
+      messages,
+      save_history,
 
       test,
     };
