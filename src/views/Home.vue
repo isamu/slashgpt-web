@@ -31,7 +31,7 @@
 
           <div class="flex">
             <div class="inline-flex items-center justify-center">
-              Function<span class="material-icons text-warmgray-600 mr-2 text-lg" @click="openFunctionCreate">add_circle </span>
+              Function<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="openFunctionCreate">add_circle </span>
             </div>
           </div>
 
@@ -93,7 +93,7 @@
         </div>
       </div>
     </div>
-    <Modal v-if="toggleCreateFunction" @closeModal="openFunctionCreate"></Modal>
+    <Modal v-if="toggleCreateFunction" @closeModal="openFunctionCreate"> name: type: </Modal>
   </div>
 </template>
 
@@ -104,6 +104,8 @@ import { ManifestData, ChatData } from "slashgpt";
 import { call_llm } from "./llm";
 
 import Modal from "@/components/Modal.vue";
+
+const functionParametersTypes = ["number", "string"];
 
 export default defineComponent({
   components: {
