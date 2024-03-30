@@ -59,7 +59,7 @@
                 <div v-if="message.role === 'assistant'">
                   <b>GPT</b>:
                   <div v-for="(line, k) in message.content.split('\n')" :key="k">
-                    {{line}}
+                    {{ line }}
                   </div>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default defineComponent({
         return {};
       }
     });
-    
+
     const manifest = computed(() => {
       return {
         title: title.value,
@@ -130,7 +130,7 @@ export default defineComponent({
     });
     const test = async () => {
       console.log("TEST");
-      
+
       const res = await call_llm(apiKey.value, userInput.value, manifest.value, save_history.value ? messages.value : []);
       messages.value = (res.messages || []).slice(1);
       last_message.value = res.last_message;
@@ -163,7 +163,7 @@ export default defineComponent({
       userInput,
       functions,
       actions,
-      
+
       manifest,
       last_message,
       messages,
