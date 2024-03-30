@@ -69,27 +69,7 @@
       </div>
       <div class="w-1/2">
         <div class="border-2 p-2 rounded-xl border-2 m-2">
-          <div>
-            <div>
-              <div class="text-left font-bold">Message</div>
-              <div v-for="(message, k) in messages" :key="k" class="text-left">
-                <div v-if="message.role === 'user'"><b>You</b>: {{ message.content }}</div>
-                <div v-if="message.role === 'assistant'">
-                  <b>GPT</b>:
-                  <div v-for="(line, k) in message.content.split('\n')" :key="k">
-                    {{ line }}
-                  </div>
-                </div>
-              </div>
-              <div>
-                <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="userInput" rows="5"></textarea>
-              </div>
-            </div>
-            <input type="checkbox" v-model="save_history" />History
-          </div>
-          <div>
-            <button @click="test" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Test</button>
-          </div>
+          <chat-message :apiKey="apiKey" :manifest="manifest" />
         </div>
       </div>
     </div>
@@ -101,15 +81,15 @@
 import { defineComponent, ref, watch, computed } from "vue";
 import { ManifestData, ChatData } from "slashgpt";
 
-import { call_llm } from "./llm";
-
 import Modal from "@/components/Modal.vue";
+import ChatMessage from "@/views/ChatMessage.vue";
 
 const functionParametersTypes = ["number", "string"];
 
 export default defineComponent({
   components: {
     Modal,
+    ChatMessage,
   },
   setup() {
     const apiKey = ref(localStorage.getItem("apiKey") ?? "");
@@ -119,11 +99,6 @@ export default defineComponent({
 
     const functions = ref(JSON.parse(localStorage.getItem("functions") ?? "{}"));
     const actions = ref(localStorage.getItem("actions") ?? "");
-
-    const userInput = ref(localStorage.getItem("userInput") ?? "");
-    const last_message = ref<ChatData | undefined>(undefined);
-    const messages = ref<ChatData[]>([]);
-    const save_history = ref(true);
 
     const function_object = computed(() => {
       try {
@@ -152,13 +127,6 @@ export default defineComponent({
         sample: "",
       } as ManifestData;
     });
-    const test = async () => {
-      console.log("TEST");
-
-      const res = await call_llm(apiKey.value, userInput.value, manifest.value, save_history.value ? messages.value : []);
-      messages.value = (res.messages || []).slice(1);
-      last_message.value = res.last_message;
-    };
 
     watch(apiKey, () => {
       localStorage.setItem("apiKey", apiKey.value);
@@ -176,10 +144,6 @@ export default defineComponent({
       localStorage.setItem("actions", actions.value);
     });
 
-    watch(userInput, () => {
-      localStorage.setItem("userInput", userInput.value);
-    });
-
     const toggleCreateFunction = ref(false);
     const openFunctionCreate = () => {
       console.log("AAA");
@@ -190,16 +154,10 @@ export default defineComponent({
       apiKey,
       title,
       prompt,
-      userInput,
       functions,
       actions,
 
       manifest,
-      last_message,
-      messages,
-      save_history,
-
-      test,
 
       openFunctionCreate,
       toggleCreateFunction,
