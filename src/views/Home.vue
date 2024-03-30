@@ -29,9 +29,23 @@
             </div>
           </div>
 
-          <div>function</div>
-          <div>
-            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="functions" rows="10"></textarea>
+          <div class="flex">
+            <div class="inline-flex items-center justify-center">
+              Function<span class="material-icons text-warmgray-600 mr-2 text-lg" @click="openFunctionCreate">add_circle </span>
+            </div>
+          </div>
+
+          <div v-for="(func, k) in functions" class="text-left border rounded-md p-2" :key="k">
+            <div><span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" /></div>
+            <div><span class="font-bold">Description</span>: <input v-model="func.description" class="flex-grow p-2 border rounded-md mt-2" /></div>
+            <div>
+              <span class="font-bold">Parameters</span>:
+              <div v-for="(prop, j) in Object.keys(func.parameters.properties)" :key="j" class="flex-grow p-2 border rounded-md mt-2">
+                <div>Name: {{ prop }}</div>
+                <div>Type: {{ func.parameters.properties[prop].type }}</div>
+                <div>Description: <input v-model="func.parameters.properties[prop].description" class="flex-grow p-2 border rounded-md mt-2" /></div>
+              </div>
+            </div>
           </div>
           <div>actions</div>
           <div>
@@ -47,6 +61,10 @@
 
           manifest<br />
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
+          Function:
+          <div class="flex-grow p-2 border rounded-md mt-2 w-full text-left">
+            {{ functions }}
+          </div>
         </div>
       </div>
       <div class="w-1/2">
@@ -75,6 +93,7 @@
         </div>
       </div>
     </div>
+    <Modal v-if="toggleCreateFunction" @closeModal="openFunctionCreate"></Modal>
   </div>
 </template>
 
@@ -84,16 +103,19 @@ import { ManifestData, ChatData } from "slashgpt";
 
 import { call_llm } from "./llm";
 
+import Modal from "@/components/Modal.vue";
+
 export default defineComponent({
-  name: "HomePage",
-  components: {},
+  components: {
+    Modal,
+  },
   setup() {
     const apiKey = ref(localStorage.getItem("apiKey") ?? "");
 
     const title = ref(localStorage.getItem("title") ?? "");
     const prompt = ref(localStorage.getItem("prompt") ?? "");
 
-    const functions = ref(localStorage.getItem("functions") ?? "");
+    const functions = ref(JSON.parse(localStorage.getItem("functions") ?? "{}"));
     const actions = ref(localStorage.getItem("actions") ?? "");
 
     const userInput = ref(localStorage.getItem("userInput") ?? "");
@@ -124,7 +146,7 @@ export default defineComponent({
         bot: "",
         temperature: 0.7,
         actions: actions_object.value,
-        functions: function_object.value,
+        functions: functions.value,
         sample: "",
       } as ManifestData;
     });
@@ -146,15 +168,21 @@ export default defineComponent({
       localStorage.setItem("prompt", prompt.value);
     });
     watch(functions, () => {
-      localStorage.setItem("functions", functions.value);
+      localStorage.setItem("functions", JSON.stringify(functions.value));
     });
     watch(actions, () => {
-      localStorage.setItem("actions", functions.value);
+      localStorage.setItem("actions", actions.value);
     });
 
     watch(userInput, () => {
       localStorage.setItem("userInput", userInput.value);
     });
+
+    const toggleCreateFunction = ref(false);
+    const openFunctionCreate = () => {
+      console.log("AAA");
+      toggleCreateFunction.value = !toggleCreateFunction.value;
+    };
 
     return {
       apiKey,
@@ -170,6 +198,9 @@ export default defineComponent({
       save_history,
 
       test,
+
+      openFunctionCreate,
+      toggleCreateFunction,
     };
   },
 });
