@@ -29,24 +29,7 @@
             </div>
           </div>
 
-          <div class="flex">
-            <div class="inline-flex items-center justify-center">
-              Function<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="openFunctionCreate">add_circle </span>
-            </div>
-          </div>
-
-          <div v-for="(func, k) in functions" class="text-left border rounded-md p-2" :key="k">
-            <div><span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" /></div>
-            <div><span class="font-bold">Description</span>: <input v-model="func.description" class="flex-grow p-2 border rounded-md mt-2" /></div>
-            <div>
-              <span class="font-bold">Parameters</span>:
-              <div v-for="(prop, j) in Object.keys(func.parameters.properties)" :key="j" class="flex-grow p-2 border rounded-md mt-2">
-                <div>Name: {{ prop }}</div>
-                <div>Type: {{ func.parameters.properties[prop].type }}</div>
-                <div>Description: <input v-model="func.parameters.properties[prop].description" class="flex-grow p-2 border rounded-md mt-2" /></div>
-              </div>
-            </div>
-          </div>
+          <FunctionEditor v-model="functions" />
           <div>actions</div>
           <div>
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
@@ -83,6 +66,7 @@ import { ManifestData, ChatData } from "slashgpt";
 
 import Modal from "@/components/Modal.vue";
 import ChatMessage from "@/views/ChatMessage.vue";
+import FunctionEditor from "@/views/FunctionEditor.vue";
 
 const functionParametersTypes = ["number", "string"];
 
@@ -90,6 +74,7 @@ export default defineComponent({
   components: {
     Modal,
     ChatMessage,
+    FunctionEditor,
   },
   setup() {
     const apiKey = ref(localStorage.getItem("apiKey") ?? "");
@@ -97,7 +82,7 @@ export default defineComponent({
     const title = ref(localStorage.getItem("title") ?? "");
     const prompt = ref(localStorage.getItem("prompt") ?? "");
 
-    const functions = ref(JSON.parse(localStorage.getItem("functions") ?? "{}"));
+    const functions = ref(localStorage.getItem("functions") ?? "{}");
     const actions = ref(localStorage.getItem("actions") ?? "");
 
     const function_object = computed(() => {
@@ -123,7 +108,7 @@ export default defineComponent({
         bot: "",
         temperature: 0.7,
         actions: actions_object.value,
-        functions: functions.value,
+        functions: function_object.value,
         sample: "",
       } as ManifestData;
     });
@@ -138,7 +123,7 @@ export default defineComponent({
       localStorage.setItem("prompt", prompt.value);
     });
     watch(functions, () => {
-      localStorage.setItem("functions", JSON.stringify(functions.value));
+      localStorage.setItem("functions", functions.value);
     });
     watch(actions, () => {
       localStorage.setItem("actions", actions.value);
@@ -146,7 +131,6 @@ export default defineComponent({
 
     const toggleCreateFunction = ref(false);
     const openFunctionCreate = () => {
-      console.log("AAA");
       toggleCreateFunction.value = !toggleCreateFunction.value;
     };
 
