@@ -33,6 +33,10 @@
           <div>
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="functions" rows="10"></textarea>
           </div>
+          <div>actions</div>
+          <div>
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
+          </div>
 
           <div>
             <div class="text-left font-bold">API key</div>
@@ -54,8 +58,9 @@
                 <div v-if="message.role === 'user'"><b>You</b>: {{ message.content }}</div>
                 <div v-if="message.role === 'assistant'">
                   <b>GPT</b>:
-                  {{ message.content }}
-                  <pre>{{ message.function_data }}</pre>
+                  <div v-for="(line, k) in message.content.split('\n')" :key="k">
+                    {{line}}
+                  </div>
                 </div>
               </div>
               <div>
@@ -89,6 +94,7 @@ export default defineComponent({
     const prompt = ref(localStorage.getItem("prompt") ?? "");
 
     const functions = ref(localStorage.getItem("functions") ?? "");
+    const actions = ref(localStorage.getItem("actions") ?? "");
 
     const userInput = ref(localStorage.getItem("userInput") ?? "");
     const last_message = ref<ChatData | undefined>(undefined);
@@ -101,9 +107,15 @@ export default defineComponent({
       } catch (e) {
         return {};
       }
-      // return functions.value
     });
-
+    const actions_object = computed(() => {
+      try {
+        return JSON.parse(actions.value);
+      } catch (e) {
+        return {};
+      }
+    });
+    
     const manifest = computed(() => {
       return {
         title: title.value,
@@ -111,7 +123,7 @@ export default defineComponent({
         about: "",
         bot: "",
         temperature: 0.7,
-        actions: {},
+        actions: actions_object.value,
         functions: function_object.value,
         sample: "",
       } as ManifestData;
@@ -136,6 +148,9 @@ export default defineComponent({
     watch(functions, () => {
       localStorage.setItem("functions", functions.value);
     });
+    watch(actions, () => {
+      localStorage.setItem("actions", functions.value);
+    });
 
     watch(userInput, () => {
       localStorage.setItem("userInput", userInput.value);
@@ -147,7 +162,8 @@ export default defineComponent({
       prompt,
       userInput,
       functions,
-
+      actions,
+      
       manifest,
       last_message,
       messages,
