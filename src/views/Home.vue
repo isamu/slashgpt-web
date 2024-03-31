@@ -46,7 +46,7 @@
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
           Function:
           <div class="flex-grow p-2 border rounded-md mt-2 w-full text-left">
-            {{ functions }}
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(JSON.parse(functions), null, '\t')" rows="20" />
           </div>
         </div>
       </div>
