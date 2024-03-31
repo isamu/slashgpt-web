@@ -4,7 +4,6 @@
       <div class="w-2/12">
         <div class="border-2 p-2 m-2 rounded-xl border-2">
           <button class="border-2 my-2 py-2 rounded-xl border-2 w-full" @click="updateData('game')">戦国武将</button>
-          <div class="border-2 my-2 py-2 rounded-xl w-full">cal</div>
         </div>
       </div>
       <div class="w-10/12">
