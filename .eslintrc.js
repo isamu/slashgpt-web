@@ -11,6 +11,8 @@ module.exports = {
   rules: {
     "vue/no-unused-vars": "error",
     "vue/no-reserved-component-names": "error",
+    "vue/v-on-event-hyphenation": "off",
+    "vue/attribute-hyphenation": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "no-unreachable": "error",
