@@ -66,8 +66,6 @@ import { ManifestData } from "slashgpt";
 import ChatMessage from "@/views/ChatMessage.vue";
 import FunctionEditor from "@/views/FunctionEditor.vue";
 
-// const functionParametersTypes = ["number", "string"];
-
 export default defineComponent({
   components: {
     ChatMessage,

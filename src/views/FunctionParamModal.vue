@@ -3,15 +3,15 @@
     <Modal @closeModal="closeModal">
       <div><span class="font-bold">Name</span>: <input v-model="inputName" class="p-2 border rounded-md mt-2" /></div>
       <div>
-        ActionType
-        <select v-model="selectedActionValue">
-          <option v-for="(option, index) in functionActionTypes" :value="option" :key="index">
+        DataType:
+        <select v-model="selectedParamValue">
+          <option v-for="(option, index) in functionParametersTypes" :value="option" :key="index">
             {{ option }}
           </option>
         </select>
       </div>
       <div>
-        <button @click="addFunctionMethod" class="border rounded-md">Add</button>
+        <button @click="addFunctionParam" class="border rounded-md">Add</button>
       </div>
     </Modal>
   </div>
@@ -20,36 +20,36 @@
 import { defineComponent, ref } from "vue";
 import Modal from "@/components/Modal.vue";
 
-const functionActionTypes = ["rest", "graphql", "message_template", "data_url"];
+const functionParametersTypes = ["number", "string"];
 
 export default defineComponent({
   components: {
     Modal,
   },
-  emits: ["addFunctionMethod", "closeModal"],
+  emits: ["addFunctionParam", "closeModal"],
   setup(_, { emit }) {
     const inputName = ref("");
 
-    const addFunctionMethod = () => {
-      emit("addFunctionMethod", {
+    const addFunctionParam = () => {
+      emit("addFunctionParam", {
         name: inputName.value,
-        actionType: selectedActionValue.value,
+        paramType: selectedParamValue.value,
       });
     };
     const closeModal = () => {
       emit("closeModal");
     };
 
-    const selectedActionValue = ref(functionActionTypes[0]);
+    const selectedParamValue = ref(functionParametersTypes[0]);
 
     return {
       inputName,
 
-      addFunctionMethod,
+      addFunctionParam,
       closeModal,
 
-      functionActionTypes,
-      selectedActionValue,
+      functionParametersTypes,
+      selectedParamValue,
     };
   },
 });

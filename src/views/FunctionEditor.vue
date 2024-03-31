@@ -2,18 +2,20 @@
   <div>
     <div class="flex">
       <div class="inline-flex items-center justify-center">
-        Function<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="openFunctionCreate">add_circle </span>
+        Function<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="toggleAddMethod">add_circle </span>
       </div>
     </div>
 
     <div v-for="(func, k) in functions" class="text-left border rounded-md p-2" :key="k">
       <div>
-        <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunction(k)">remove_circle </span>
+        <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunctionMethod(k)">remove_circle </span>
         <span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" />
       </div>
       <div><span class="font-bold">Description</span>: <input v-model="func.description" class="flex-grow p-2 border rounded-md mt-2" /></div>
       <div>
-        <span class="font-bold">Parameters</span>:
+        <span class="font-bold">Parameters</span>:<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="toggleAddParam(k)"
+          >add_circle
+        </span>
         <div v-for="(prop, j) in Object.keys(func.parameters.properties || {})" :key="j" class="flex-grow p-2 border rounded-md mt-2">
           <div>Name: {{ prop }}</div>
           <div>Type: {{ func.parameters.properties[prop].type }}</div>
@@ -22,16 +24,19 @@
       </div>
     </div>
   </div>
-  <FunctionNewModal v-if="toggleCreateFunction" @closeModal="openFunctionCreate" @addFunctionParam="addFunctionParam"></FunctionNewModal>
+  <FunctionNewModal v-if="isOpenNew" @closeModal="toggleAddMethod" @addFunctionMethod="addFunctionMethod"></FunctionNewModal>
+  <FunctionParamModal v-if="isOpenParamNew" @closeModal="toggleAddParam" @addFunctionParam="addFunctionParam"></FunctionParamModal>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch, toRefs } from "vue";
 import FunctionNewModal from "@/views/FunctionNewModal.vue";
+import FunctionParamModal from "@/views/FunctionParamModal.vue";
 
 export default defineComponent({
   components: {
     FunctionNewModal,
+    FunctionParamModal,
   },
   props: {
     modelValue: {
@@ -59,23 +64,38 @@ export default defineComponent({
       { deep: true },
     );
 
-    const toggleCreateFunction = ref(false);
-    const openFunctionCreate = () => {
-      toggleCreateFunction.value = !toggleCreateFunction.value;
+    const isOpenNew = ref(false);
+    const toggleAddMethod = () => {
+      isOpenNew.value = !isOpenNew.value;
     };
-    const addFunctionParam = (name: string) => {
+
+    const currentMethodKey = ref(0);
+    const isOpenParamNew = ref(false);
+    const toggleAddParam = (key: number) => {
+      currentMethodKey.value = key;
+      isOpenParamNew.value = !isOpenParamNew.value;
+    };
+    const addFunctionMethod = (params: { name: string; actionType: string }) => {
       const tmp = functions.value;
       tmp.push({
-        name: name,
+        name: params.name,
         description: "",
         parameters: {
           type: "object",
           properties: {},
         },
       });
-      openFunctionCreate();
+      toggleAddMethod();
     };
-    const removeFunction = (key: number) => {
+    const addFunctionParam = (params: { name: string; paramType: string }) => {
+      const tmp = functions.value[currentMethodKey.value];
+      tmp.parameters.properties[params.name] = {
+        type: params.paramType,
+        description: "",
+      };
+      toggleAddParam();
+    };
+    const removeFunctionMethod = (key: number) => {
       functions.value = functions.value.filter((_, n) => {
         return n !== key;
       });
@@ -83,11 +103,16 @@ export default defineComponent({
     return {
       functions,
 
-      addFunctionParam,
-      removeFunction,
+      addFunctionMethod,
+      removeFunctionMethod,
 
-      openFunctionCreate,
-      toggleCreateFunction,
+      addFunctionParam,
+
+      toggleAddMethod,
+      isOpenNew,
+
+      toggleAddParam,
+      isOpenParamNew,
     };
   },
 });
