@@ -7,7 +7,10 @@
     </div>
 
     <div v-for="(func, k) in functions" class="text-left border rounded-md p-2" :key="k">
-      <div><span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" /></div>
+      <div>
+        <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunction(k)">remove_circle </span>
+        <span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" />
+      </div>
       <div><span class="font-bold">Description</span>: <input v-model="func.description" class="flex-grow p-2 border rounded-md mt-2" /></div>
       <div>
         <span class="font-bold">Parameters</span>:
@@ -38,7 +41,7 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const functions = ref({});
+    const functions = ref([]);
     const { modelValue } = toRefs(props);
 
     watch(
@@ -70,13 +73,18 @@ export default defineComponent({
           properties: {},
         },
       });
-      console.log(tmp);
-      // openFunctionCreate();
+      openFunctionCreate();
+    };
+    const removeFunction = (key: number) => {
+      functions.value = functions.value.filter((_, n) => {
+        return n !== key;
+      });
     };
     return {
       functions,
 
       addFunctionParam,
+      removeFunction,
 
       openFunctionCreate,
       toggleCreateFunction,
