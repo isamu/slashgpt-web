@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex">
-      <div class="inline-flex items-center justify-center">
+      <div class="inline-flex items-center justify-center font-bold">
         Function<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="toggleAddMethod">add_circle </span>
       </div>
     </div>

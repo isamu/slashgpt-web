@@ -3,7 +3,7 @@
     <div class="w-10/12 m-auto flex">
       <div class="w-1/2">
         <div class="border-2 p-2 m-2 rounded-xl border-2">
-          Manifest
+          <h2 class="font-bold text-xl">Manifest</h2>
           <div>
             <div class="text-left font-bold">Title</div>
             <div>
@@ -41,13 +41,14 @@
               <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
             </div>
           </div>
-
+          <!--
           manifest<br />
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
           Function:
           <div class="flex-grow p-2 border rounded-md mt-2 w-full text-left">
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(JSON.parse(functions), null, '\t')" rows="20" />
           </div>
+          -->
         </div>
       </div>
       <div class="w-1/2">

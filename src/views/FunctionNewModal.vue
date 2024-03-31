@@ -1,17 +1,21 @@
 <template>
   <div>
     <Modal @closeModal="closeModal">
-      <div><span class="font-bold">Name</span>: <input v-model="inputName" class="p-2 border rounded-md mt-2" /></div>
-      <div>
-        ActionType
-        <select v-model="selectedActionValue">
-          <option v-for="(option, index) in functionActionTypes" :value="option" :key="index">
-            {{ option }}
-          </option>
-        </select>
+      <div class="text-left">
+        <div><span class="font-bold">Name</span>: <input v-model="inputName" class="p-2 border rounded-md mt-2" /></div>
+        <div>
+          <span class="font-bold">ActionType</span>:
+          <select v-model="selectedActionValue" class="border rounded-md p-2 m-2">
+            <option v-for="(option, index) in functionActionTypes" :value="option" :key="index">
+              {{ option }}
+            </option>
+          </select>
+        </div>
       </div>
       <div>
-        <button @click="addFunctionMethod" class="border rounded-md">Add</button>
+        <div>
+          <button @click="addFunctionMethod" class="border rounded-md m-2 p-2">Add</button>
+        </div>
       </div>
     </Modal>
   </div>
