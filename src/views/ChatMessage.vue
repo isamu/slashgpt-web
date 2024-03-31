@@ -7,7 +7,7 @@
           <div v-if="message.role === 'user'"><b>You</b>: {{ message.content }}</div>
           <div v-if="message.role === 'assistant'">
             <b>GPT</b>:
-            <div v-for="(line, k) in message.content.split('\n')" :key="k">
+            <div v-for="(line, j) in message.content.split('\n')" :key="j">
               {{ line }}
             </div>
           </div>
@@ -24,13 +24,19 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch, computed } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { call_llm } from "./llm";
 
 export default defineComponent({
   props: {
-    apiKey: String,
-    manifest: Object,
+    apiKey: {
+      type: String,
+      default: "",
+    },
+    manifest: {
+      type: Object,
+      default: () => {},
+    },
   },
   setup(props) {
     const userInput = ref(localStorage.getItem("userInput") ?? "");
@@ -38,8 +44,6 @@ export default defineComponent({
     const save_history = ref(true);
 
     const test = async () => {
-      console.log("TEST");
-
       const res = await call_llm(props.apiKey, userInput.value, props.manifest, save_history.value ? messages.value : []);
       messages.value = (res.messages || []).slice(1);
     };

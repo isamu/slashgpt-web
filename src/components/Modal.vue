@@ -8,13 +8,12 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch, computed } from "vue";
+import { defineComponent } from "vue";
 export default defineComponent({
   emits: ["closeModal"],
   setup(_, { emit }) {
     return {
       closeModal: () => {
-        console.log("AA3");
         emit("closeModal");
       },
     };

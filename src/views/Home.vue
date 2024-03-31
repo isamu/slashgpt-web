@@ -56,23 +56,20 @@
         </div>
       </div>
     </div>
-    <Modal v-if="toggleCreateFunction" @closeModal="openFunctionCreate"> name: type: </Modal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch, computed } from "vue";
-import { ManifestData, ChatData } from "slashgpt";
+import { ManifestData } from "slashgpt";
 
-import Modal from "@/components/Modal.vue";
 import ChatMessage from "@/views/ChatMessage.vue";
 import FunctionEditor from "@/views/FunctionEditor.vue";
 
-const functionParametersTypes = ["number", "string"];
+// const functionParametersTypes = ["number", "string"];
 
 export default defineComponent({
   components: {
-    Modal,
     ChatMessage,
     FunctionEditor,
   },
@@ -129,11 +126,6 @@ export default defineComponent({
       localStorage.setItem("actions", actions.value);
     });
 
-    const toggleCreateFunction = ref(false);
-    const openFunctionCreate = () => {
-      toggleCreateFunction.value = !toggleCreateFunction.value;
-    };
-
     return {
       apiKey,
       title,
@@ -142,9 +134,6 @@ export default defineComponent({
       actions,
 
       manifest,
-
-      openFunctionCreate,
-      toggleCreateFunction,
     };
   },
 });
