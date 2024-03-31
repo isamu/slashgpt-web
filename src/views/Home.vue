@@ -1,7 +1,17 @@
 <template>
   <div class="home">
     <div class="w-10/12 m-auto flex">
-      <div class="w-1/2">
+      <div class="w-2/12">
+        <div class="border-2 p-2 m-2 rounded-xl border-2">
+          <div class="border-2 p-2 m-2 rounded-xl border-2">
+            戦国武将
+          </div> 
+          <div class="border-2 p-2 m-2 rounded-xl border-2">
+            cal
+          </div>
+       </div>
+      </div>
+      <div class="w-6/12">
         <div class="border-2 p-2 m-2 rounded-xl border-2">
           <h2 class="font-bold text-xl">Manifest</h2>
           <div>
@@ -30,7 +40,7 @@
           </div>
 
           <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" />
-          <div>Actions</div>
+          <div class="text-left font-bold mt-2">Actions</div>
           <div>
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
           </div>
@@ -51,8 +61,9 @@
           -->
         </div>
       </div>
-      <div class="w-1/2">
+      <div class="w-4/12">
         <div class="border-2 p-2 rounded-xl border-2 m-2">
+          <h2 class="font-bold text-xl">Chat Area</h2>
           <chat-message :apiKey="apiKey" :manifest="manifest" />
         </div>
       </div>

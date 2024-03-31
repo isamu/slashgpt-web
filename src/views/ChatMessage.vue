@@ -19,7 +19,7 @@
       <input type="checkbox" v-model="save_history" />History
     </div>
     <div>
-      <button @click="test" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Test</button>
+      <button @click="send" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Send</button>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default defineComponent({
     const messages = ref<ChatData[]>([]);
     const save_history = ref(true);
 
-    const test = async () => {
+    const send = async () => {
       const res = await call_llm(props.apiKey, userInput.value, props.manifest, save_history.value ? messages.value : []);
       messages.value = (res.messages || []).slice(1);
     };
@@ -53,7 +53,7 @@ export default defineComponent({
 
     return {
       userInput,
-      test,
+      send,
 
       save_history,
       messages,

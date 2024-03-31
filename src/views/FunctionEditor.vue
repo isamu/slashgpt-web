@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="flex">
+    <div class="flex mt-2">
       <div class="inline-flex items-center justify-center font-bold">
         Function<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="toggleAddMethod">add_circle </span>
       </div>
     </div>
 
-    <div v-for="(func, k) in functions" class="text-left border rounded-md p-2" :key="k">
+    <div v-for="(func, k) in functions" class="text-left border rounded-md p-2 mb-2" :key="k">
       <div>
         <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunctionMethod(k)">remove_circle </span>
         <span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" />
