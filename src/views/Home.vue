@@ -30,7 +30,7 @@
           </div>
 
           <FunctionEditor v-model="functions" />
-          <div>actions</div>
+          <div>Actions</div>
           <div>
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
           </div>
@@ -91,6 +91,18 @@ export default defineComponent({
       try {
         return JSON.parse(actions.value);
       } catch (e) {
+        return {};
+      }
+    });
+    watch(actions, () => {
+      try {
+        const json = JSON.parse(actions.value);
+        const newStr = JSON.stringify(json, null, "\t");
+        if (newStr !== actions.value) {
+          actions.value = newStr;
+        }
+      } catch (e) {
+        console.log(e);
         return {};
       }
     });
