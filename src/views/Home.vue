@@ -119,10 +119,30 @@ export default defineComponent({
         sample: "",
       } as ManifestData;
     });
+    const defautlAction = {
+      rest: {
+        type: "rest",
+        url: "",
+      },
+      graphql: {
+        type: "graphQL",
+        url: "",
+      },
+      message_template: {
+        type: "message_template",
+        message: "",
+      },
+      data_url: {
+        type: "data_url",
+        template_message: "template message",
+        mime_type: "text/calendar",
+        message: "",
+      },
+    };
+
     const addActionsElement = (params: { name: string; actionType: string }) => {
       const tmp = actions_object.value;
-      console.log(params);
-      tmp[params.name] = { type: params.actionType };
+      tmp[params.name] = defautlAction[params.actionType];
       const newStr = JSON.stringify(tmp, null, "\t");
       actions.value = newStr;
     };
