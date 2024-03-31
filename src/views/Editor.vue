@@ -1,62 +1,62 @@
 <template>
-<div class=" m-auto flex">
-  <div class="w-8/12">
-    <div class="border-2 p-2 m-2 rounded-xl border-2">
-      <h2 class="font-bold text-xl">Manifest</h2>
-      <div>
-        <div class="text-left font-bold">Title</div>
+  <div class="m-auto flex">
+    <div class="w-8/12">
+      <div class="border-2 p-2 m-2 rounded-xl border-2">
+        <h2 class="font-bold text-xl">Manifest</h2>
         <div>
-          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="title" />
+          <div class="text-left font-bold">Title</div>
+          <div>
+            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="title" />
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="text-left font-bold">Description</div>
         <div>
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="description"></textarea>
+          <div class="text-left font-bold">Description</div>
+          <div>
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="description"></textarea>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="text-left font-bold">Prompt</div>
         <div>
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
+          <div class="text-left font-bold">Prompt</div>
+          <div>
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="text-left font-bold">Temperature</div>
         <div>
-          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="temperature" />
+          <div class="text-left font-bold">Temperature</div>
+          <div>
+            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="temperature" />
+          </div>
         </div>
-      </div>
-      
-      <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" />
-      <div class="text-left font-bold mt-2">Actions</div>
-      <div>
-        <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
-      </div>
-      
-      <div>
-        <div class="text-left font-bold">API key</div>
+
+        <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" />
+        <div class="text-left font-bold mt-2">Actions</div>
         <div>
-          <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
+          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
+        </div>
+
+        <div>
+          <div class="text-left font-bold">API key</div>
+          <div>
+            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
+          </div>
+        </div>
+        <div v-if="true">
+          manifest<br />
+          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
+          Function:
+          <div class="flex-grow p-2 border rounded-md mt-2 w-full text-left">
+            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(JSON.parse(functions), null, '\t')" rows="20" />
+          </div>
         </div>
       </div>
-      <div v-if="true">
-        manifest<br />
-        <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
-        Function:
-        <div class="flex-grow p-2 border rounded-md mt-2 w-full text-left">
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(JSON.parse(functions), null, '\t')" rows="20" />
-        </div>
-        </div>
+    </div>
+    <div class="w-4/12">
+      <div class="border-2 p-2 rounded-xl border-2 m-2">
+        <h2 class="font-bold text-xl">Chat Area</h2>
+        <chat-message :apiKey="apiKey" :manifest="manifest" />
+      </div>
     </div>
   </div>
-  <div class="w-4/12">
-    <div class="border-2 p-2 rounded-xl border-2 m-2">
-      <h2 class="font-bold text-xl">Chat Area</h2>
-    <chat-message :apiKey="apiKey" :manifest="manifest" />
-  </div>
-</div>
-</div>
 </template>
 
 <script lang="ts">
@@ -171,7 +171,7 @@ export default defineComponent({
       localStorage.setItem("actions", actions.value);
     });
 
-    const updateData = (data: {[key: string]: string}) => {
+    const updateData = (data: { [key: string]: string }) => {
       // const { title, description, prompt, temperature, functions, actions } = data.manifest;
       title.value = data.manifest.title;
       description.value = data.manifest.description;
@@ -180,7 +180,7 @@ export default defineComponent({
       functions.value = JSON.stringify(data.manifest.functions, null, "\t");
       actions.value = JSON.stringify(data.manifest.actions, null, "\t");
     };
-    
+
     return {
       apiKey,
       title,
