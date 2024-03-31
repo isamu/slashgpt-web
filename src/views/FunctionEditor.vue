@@ -44,7 +44,7 @@ export default defineComponent({
       default: "",
     },
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "addActionsElement"],
   setup(props, { emit }) {
     const functions = ref([]);
     const { modelValue } = toRefs(props);
@@ -85,6 +85,7 @@ export default defineComponent({
           properties: {},
         },
       });
+      emit("addActionsElement", { name: params.name, actionType: params.actionType });
       toggleAddMethod();
     };
     const addFunctionParam = (params: { name: string; paramType: string }) => {

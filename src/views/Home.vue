@@ -29,7 +29,7 @@
             </div>
           </div>
 
-          <FunctionEditor v-model="functions" />
+          <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" />
           <div>Actions</div>
           <div>
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
@@ -119,6 +119,13 @@ export default defineComponent({
         sample: "",
       } as ManifestData;
     });
+    const addActionsElement = (params: { name: string; actionType: string }) => {
+      const tmp = actions_object.value;
+      console.log(params);
+      tmp[params.name] = { type: params.actionType };
+      const newStr = JSON.stringify(tmp, null, "\t");
+      actions.value = newStr;
+    };
 
     watch(apiKey, () => {
       localStorage.setItem("apiKey", apiKey.value);
@@ -142,6 +149,8 @@ export default defineComponent({
       prompt,
       functions,
       actions,
+
+      addActionsElement,
 
       manifest,
     };
