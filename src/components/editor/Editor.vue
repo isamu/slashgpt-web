@@ -40,7 +40,10 @@
             <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
           </div>
         </div>
+      </div>
+      <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div v-if="true">
+          Debug View (read only)<br/>
           manifest<br />
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
           Function:
