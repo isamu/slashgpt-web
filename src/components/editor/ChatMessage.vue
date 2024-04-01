@@ -46,7 +46,7 @@ export default defineComponent({
     const save_history = ref(true);
 
     const isLoading = ref(false);
-    
+
     const send = async () => {
       isLoading.value = true;
       const res = await call_llm(props.apiKey, userInput.value, props.manifest, save_history.value ? messages.value : []);

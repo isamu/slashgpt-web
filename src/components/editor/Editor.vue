@@ -53,7 +53,16 @@
     <div class="w-4/12">
       <div class="border-2 p-2 rounded-xl border-2 m-2">
         <h2 class="font-bold text-xl">Chat Area</h2>
-        <chat-message :apiKey="apiKey" :manifest="manifest" />
+        <chat-message :apiKey="apiKey" :manifest="manifest" ref="chatMessageRef" />
+      </div>
+      <div class="text-left border-2 p-2 rounded-xl border-2 m-2">
+        <div>
+          <b>Sample</b>
+        </div>
+        <div>
+          {{ manifest.sample }}
+        </div>
+        <button @click="setSample" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Set Sample</button>
       </div>
     </div>
   </div>
@@ -81,6 +90,9 @@ export default defineComponent({
 
     const functions = ref(localStorage.getItem("functions") ?? "{}");
     const actions = ref(localStorage.getItem("actions") ?? "");
+    const sample = ref(localStorage.getItem("sample") ?? "");
+
+    const chatMessageRef = ref();
 
     const function_object = computed(() => {
       try {
@@ -118,7 +130,7 @@ export default defineComponent({
         temperature: 0.7,
         actions: actions_object.value,
         functions: function_object.value,
-        sample: "",
+        sample: sample.value,
       } as ManifestData;
     });
     const defautlAction = {
@@ -170,6 +182,9 @@ export default defineComponent({
     watch(actions, () => {
       localStorage.setItem("actions", actions.value);
     });
+    watch(sample, () => {
+      localStorage.setItem("sample", sample.value);
+    });
 
     const updateData = (data: { [key: string]: string }) => {
       // const { title, description, prompt, temperature, functions, actions } = data.manifest;
@@ -179,8 +194,12 @@ export default defineComponent({
       temperature.value = String(data.manifest.temperature);
       functions.value = JSON.stringify(data.manifest.functions, null, "\t");
       actions.value = JSON.stringify(data.manifest.actions, null, "\t");
+      sample.value = data.manifest.sample;
     };
 
+    const setSample = () => {
+      chatMessageRef.value.userInput = sample.value;
+    };
     return {
       apiKey,
       title,
@@ -189,6 +208,10 @@ export default defineComponent({
       temperature,
       functions,
       actions,
+
+      sample,
+      setSample,
+      chatMessageRef,
 
       addActionsElement,
 
