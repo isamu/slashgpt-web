@@ -2700,9 +2700,10 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-"slashgpt@https://github.com/isamu/slashgpt-js.git":
-  version "0.0.1"
-  resolved "https://github.com/isamu/slashgpt-js.git#b26cf0a89598f18b6fa945a1ad4bc7e889665852"
+slashgpt@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/slashgpt/-/slashgpt-0.0.2.tgz#d95b33372f975e960c8c005da749091276b5aa7c"
+  integrity sha512-PQY9hggu8dEqXgAIV7h9tw+uDhU5GG32SHzV1cL5WxI8A9Wlla79qaLRHTX9M1HgN/g0w3ZBlCuTfL26lSx9GQ==
   dependencies:
     graphql "^16.8.1"
     graphql-request "^6.1.0"
