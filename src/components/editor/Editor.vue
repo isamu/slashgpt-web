@@ -174,7 +174,7 @@ export default defineComponent({
     const updateData = (data: { [key: string]: string }) => {
       // const { title, description, prompt, temperature, functions, actions } = data.manifest;
       title.value = data.manifest.title;
-      description.value = data.manifest.description;
+      description.value = data.manifest.description || "";
       prompt.value = data.manifest.prompt[0];
       temperature.value = String(data.manifest.temperature);
       functions.value = JSON.stringify(data.manifest.functions, null, "\t");
