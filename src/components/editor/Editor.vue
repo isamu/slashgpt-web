@@ -188,13 +188,13 @@ export default defineComponent({
 
     const updateData = (data: { [key: string]: string }) => {
       // const { title, description, prompt, temperature, functions, actions } = data.manifest;
-      title.value = data.manifest.title;
+      title.value = data.manifest.title || "";
       description.value = data.manifest.description || "";
-      prompt.value = data.manifest.prompt[0];
-      temperature.value = String(data.manifest.temperature);
-      functions.value = JSON.stringify(data.manifest.functions, null, "\t");
-      actions.value = JSON.stringify(data.manifest.actions, null, "\t");
-      sample.value = data.manifest.sample;
+      prompt.value = data.manifest.prompt.join("\n") || "";
+      temperature.value = String(data.manifest.temperature || 0.7);
+      functions.value = JSON.stringify(data.manifest.functions, null, "\t") || "";
+      actions.value = JSON.stringify(data.manifest.actions, null, "\t") || "";
+      sample.value = data.manifest.sample || "";
     };
 
     const setSample = () => {
