@@ -63,8 +63,8 @@
 import { defineComponent, ref, watch, computed } from "vue";
 import { ManifestData } from "slashgpt";
 
-import ChatMessage from "@/views/ChatMessage.vue";
-import FunctionEditor from "@/views/FunctionEditor.vue";
+import ChatMessage from "@/components/editor/ChatMessage.vue";
+import FunctionEditor from "@/components/editor/FunctionEditor.vue";
 
 export default defineComponent({
   components: {

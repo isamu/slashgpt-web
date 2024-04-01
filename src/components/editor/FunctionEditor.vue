@@ -30,8 +30,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, toRefs } from "vue";
-import FunctionNewModal from "@/views/FunctionNewModal.vue";
-import FunctionParamModal from "@/views/FunctionParamModal.vue";
+import FunctionNewModal from "@/components/editor/functions/FunctionNewModal.vue";
+import FunctionParamModal from "@/components/editor/functions/FunctionParamModal.vue";
 
 export default defineComponent({
   components: {

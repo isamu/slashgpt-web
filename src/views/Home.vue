@@ -16,8 +16,8 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
-import Editor from "@/views/Editor.vue";
-import { data } from "./data";
+import Editor from "@/components/editor/Editor.vue";
+import { data } from "@/utils/data";
 
 export default defineComponent({
   components: {

@@ -25,7 +25,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { call_llm } from "./llm";
+import { call_llm } from "@/utils/llm";
 
 export default defineComponent({
   props: {
