@@ -19,7 +19,9 @@
       <input type="checkbox" v-model="save_history" />History
     </div>
     <div>
-      <button @click="send" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Send</button>
+      <button @click="send" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400" :disabled="isLoading">
+        {{ isLoading ? "Loading..." : "Send" }}
+      </button>
     </div>
   </div>
 </template>
@@ -43,9 +45,13 @@ export default defineComponent({
     const messages = ref<ChatData[]>([]);
     const save_history = ref(true);
 
+    const isLoading = ref(false);
+    
     const send = async () => {
+      isLoading.value = true;
       const res = await call_llm(props.apiKey, userInput.value, props.manifest, save_history.value ? messages.value : []);
       messages.value = (res.messages || []).slice(1);
+      isLoading.value = false;
     };
     watch(userInput, () => {
       localStorage.setItem("userInput", userInput.value);
@@ -57,6 +63,8 @@ export default defineComponent({
 
       save_history,
       messages,
+
+      isLoading,
     };
   },
 });
