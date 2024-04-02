@@ -15,6 +15,7 @@ export const call_llm = async (apiKey: string, message: string, manifest: Manife
   try {
     await session.call_loop(callback);
   } catch (e: unknown) {
+    alert("sorry error: " + e)
     if (e instanceof Error) {
       return { result: false, error: { message: e.message } };
     }
