@@ -2701,8 +2701,8 @@ slash@^3.0.0:
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
 "slashgpt@https://github.com/isamu/slashgpt-js.git":
-  version "0.0.2"
-  resolved "https://github.com/isamu/slashgpt-js.git#7eb886accad96d8fe18a4de2969dbfa1cd2acff1"
+  version "0.0.4"
+  resolved "https://github.com/isamu/slashgpt-js.git#64498064533212b27d3dbc41ece9635864a9294f"
   dependencies:
     graphql "^16.8.1"
     graphql-request "^6.1.0"
