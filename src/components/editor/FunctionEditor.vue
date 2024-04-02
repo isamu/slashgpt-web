@@ -47,7 +47,7 @@ export default defineComponent({
       default: "",
     },
   },
-  emits: ["update:modelValue", "addActionsElement"],
+  emits: ["update:modelValue", "addActionsElement", "removeActionsElement"],
   setup(props, { emit }) {
     const functions = ref([]);
     const { modelValue } = toRefs(props);
@@ -100,9 +100,11 @@ export default defineComponent({
       toggleAddParam();
     };
     const removeFunctionMethod = (key: number) => {
+      const keyName = functions.value[key].name;
       functions.value = functions.value.filter((_, n) => {
         return n !== key;
       });
+      emit("removeActionsElement", { name: keyName });
     };
     const removeFunctionParam = (key: number, name: string) => {
       // console.log(key, name);

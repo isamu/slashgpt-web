@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" />
+        <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" @removeActionsElement="removeActionsElement" />
         <div class="text-left font-bold mt-2">Actions</div>
         <div>
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
@@ -168,6 +168,14 @@ export default defineComponent({
       const newStr = JSON.stringify(tmp, null, "\t");
       actions.value = newStr;
     };
+    const removeActionsElement = (params: { name: string }) => {
+      if (actions_object.value[params.name]) {
+        const tmp = actions_object.value;
+        delete tmp[params.name];
+        const newStr = JSON.stringify(tmp, null, "\t");
+        actions.value = newStr;
+      }
+    };
 
     watch(apiKey, () => {
       localStorage.setItem("apiKey", apiKey.value);
@@ -233,6 +241,7 @@ export default defineComponent({
       chatMessageRef,
 
       addActionsElement,
+      removeActionsElement,
 
       manifest,
 
