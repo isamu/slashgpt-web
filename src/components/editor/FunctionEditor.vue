@@ -17,7 +17,10 @@
           >add_circle
         </span>
         <div v-for="(prop, j) in Object.keys(func.parameters.properties || {})" :key="j" class="flex-grow p-2 border rounded-md mt-2">
-          <div>Name: {{ prop }}</div>
+          <div>
+            <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunctionParam(k, prop)">remove_circle </span>
+            Name: {{ prop }}
+          </div>
           <div>Type: {{ func.parameters.properties[prop].type }}</div>
           <div>Description: <input v-model="func.parameters.properties[prop].description" class="flex-grow p-2 border rounded-md mt-2" /></div>
         </div>
@@ -101,11 +104,16 @@ export default defineComponent({
         return n !== key;
       });
     };
+    const removeFunctionParam = (key: number, name: string) => {
+      // console.log(key, name);
+      delete functions.value[key]["parameters"]["properties"][name];
+    };
     return {
       functions,
 
       addFunctionMethod,
       removeFunctionMethod,
+      removeFunctionParam,
 
       addFunctionParam,
 

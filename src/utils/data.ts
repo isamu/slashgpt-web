@@ -101,7 +101,66 @@ const paper = {
     },
   },
 };
-console.log(paper);
+/*
+const news = {
+  manifest: {
+    title: "News News",
+    about: "snakajima",
+    temperature: 0,
+    functions: [
+      {
+        name: "get_rss",
+        description: "get rss feed",
+        parameters: {
+          type: "object",
+          properties: {
+            user_has_request: {
+              type: "boolean",
+              description: "Whether user has any requests.",
+            },
+          },
+        },
+      },
+      {
+        name: "visit_web",
+        description: "Visit web page",
+        parameters: {
+          type: "object",
+          properties: {
+            user_has_request: {
+              type: "boolean",
+              description: "Whether user has any requests.",
+            },
+          },
+          required: ["link", "boolean"],
+        },
+      },
+    ],
+    sample: "News about Tesla",
+    sample2: "News about Apple",
+    actions: {
+      get_rss: {
+        type: "rest",
+        url: "https://singularitysociety.org/index.xml",
+      },
+      visit_web: {
+        type: "rest",
+        method: "POST",
+        url: "https://webreader.webpilotai.com/api/visit-web",
+        appkey: "WEBPILOT_UID",
+        headers: {
+          "WebPilot-Friend-UID": "{appkey}",
+        },
+      },
+    },
+    prompt: [
+      "When the user ask for news, call 'get_rss' function to retrieve news and show all news to user.",
+      "When the user choose one of news, call 'visit_web' method with the link to retrieve the content (with user_has_request=true).",
+      "そして、その情報を利用して、一行目にリンク付きタイトル、その下に日本語の要約をmarkdown形式で書いて。",
+    ],
+  },
+};
+*/
 export const dataSet = {
   game,
   paper,
