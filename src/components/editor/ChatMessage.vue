@@ -28,6 +28,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import { call_llm } from "@/utils/llm";
+import { ChatHistory } from "slashgpt";
 
 export default defineComponent({
   props: {
@@ -49,7 +50,10 @@ export default defineComponent({
 
     const send = async () => {
       isLoading.value = true;
-      const res = await call_llm(props.apiKey, userInput.value, props.manifest, save_history.value ? messages.value : []);
+      const callback = (history: ChatHistory) => {
+        messages.value = (history.messages() || []).slice(1);
+      };
+      const res = await call_llm(props.apiKey, userInput.value, props.manifest, save_history.value ? messages.value : [], callback);
       messages.value = (res.messages || []).slice(1);
       isLoading.value = false;
     };

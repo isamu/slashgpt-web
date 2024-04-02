@@ -1,17 +1,19 @@
-import { ChatSession, ChatConfig, ManifestData, ChatData } from "slashgpt";
+import { ChatSession, ChatConfig, ManifestData, ChatData, ChatHistory } from "slashgpt";
 
 const get_chat_session = (apiKey: string, manifest: ManifestData) => {
   const config = new ChatConfig("");
   return new ChatSession(config, manifest, { apiKey, dangerouslyAllowBrowser: true });
 };
-const callback = () => {};
 
-export const call_llm = async (apiKey: string, message: string, manifest: ManifestData, history: ChatData[] = []) => {
+export const call_llm = async (apiKey: string, message: string, manifest: ManifestData, history: ChatData[] = [], __callback: (history: ChatHistory) => void) => {
   const session = get_chat_session(apiKey, manifest);
   history.map((message) => {
     session.append_message(message.role, message.content, false);
   });
   session.append_user_question(message);
+  const callback = () => {
+    return __callback(session.history);
+  };
   try {
     await session.call_loop(callback);
   } catch (e: unknown) {
