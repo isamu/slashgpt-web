@@ -33,9 +33,14 @@
         <div>
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
         </div>
+      </div>
+      <div class="m-2">
+        <button @click="download" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Download manifest</button>
+      </div>
 
+      <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div>
-          <div class="text-left font-bold">API key</div>
+          <div class="text-left"><span class="font-bold">API key</span><span class="text-xs">(ブラウザに保存します)</span></div>
           <div>
             <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
           </div>
@@ -43,7 +48,7 @@
       </div>
       <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div v-if="true">
-          Debug View (read only)<br/>
+          Debug View (read only)<br />
           manifest<br />
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
           Function:
@@ -127,7 +132,7 @@ export default defineComponent({
     const manifest = computed(() => {
       return {
         title: title.value,
-        prompt: [prompt.value],
+        prompt: (prompt.value || "").split("\n"),
         about: "",
         bot: "",
         temperature: 0.7,
@@ -203,6 +208,15 @@ export default defineComponent({
     const setSample = () => {
       chatMessageRef.value.userInput = sample.value;
     };
+    const download = () => {
+      const blob = new Blob([JSON.stringify(manifest.value, null, "\t")], {
+        type: `application/json`,
+      });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "manifest.json";
+      link.click();
+    };
     return {
       apiKey,
       title,
@@ -211,6 +225,8 @@ export default defineComponent({
       temperature,
       functions,
       actions,
+
+      download,
 
       sample,
       setSample,
