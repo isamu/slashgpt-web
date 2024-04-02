@@ -40,7 +40,7 @@
 
       <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div>
-          <div class="text-left"><span class="font-bold">API key</span><span class="text-xs">(ブラウザに保存します)</span></div>
+          <div class="text-left"><span class="font-bold">OpenAI API key</span><span class="text-xs">(ブラウザに保存します)</span></div>
           <div>
             <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
           </div>
