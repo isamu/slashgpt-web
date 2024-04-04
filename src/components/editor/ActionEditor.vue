@@ -37,7 +37,11 @@ export default defineComponent({
     watch(
       modelValue,
       () => {
-        actions.value = JSON.parse(modelValue.value);
+        try {
+          actions.value = JSON.parse(modelValue.value);
+        } catch (e) {
+          actions.value = {};
+        }
       },
       { immediate: true },
     );

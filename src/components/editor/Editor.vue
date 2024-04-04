@@ -31,9 +31,6 @@
         <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" @removeActionsElement="removeActionsElement" />
         <div class="text-left font-bold mt-2">Actions</div>
         <ActionEditor v-model="actions" />
-        <div>
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
-        </div>
       </div>
       <div class="m-2">
         <button @click="download" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Download manifest</button>
@@ -46,6 +43,9 @@
             <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
           </div>
         </div>
+      </div>
+      <div class="m-2">
+        <button @click="clearData" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Clear Data</button>
       </div>
       <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div v-if="true">
@@ -98,8 +98,8 @@ export default defineComponent({
     const prompt = ref(localStorage.getItem("prompt") ?? "");
     const temperature = ref(localStorage.getItem("temperature") ?? "");
 
-    const functions = ref(localStorage.getItem("functions") ?? "{}");
-    const actions = ref(localStorage.getItem("actions") ?? "");
+    const functions = ref(localStorage.getItem("functions") ?? "[]");
+    const actions = ref(localStorage.getItem("actions") ?? "{}");
     const sample = ref(localStorage.getItem("sample") ?? "");
 
     const chatMessageRef = ref();
@@ -228,6 +228,15 @@ export default defineComponent({
       link.download = "manifest.json";
       link.click();
     };
+    const clearData = () => {
+      title.value = "";
+      description.value = "";
+      prompt.value = "";
+      temperature.value = "";
+      functions.value = "[]";
+      actions.value = "{}";
+      sample.value = "";
+    };
     return {
       apiKey,
       title,
@@ -238,6 +247,7 @@ export default defineComponent({
       actions,
 
       download,
+      clearData,
 
       sample,
       setSample,
