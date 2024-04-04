@@ -97,6 +97,7 @@ export default defineComponent({
     const description = ref(localStorage.getItem("description") ?? "");
     const prompt = ref(localStorage.getItem("prompt") ?? "");
     const temperature = ref(localStorage.getItem("temperature") ?? "");
+    const model = ref(localStorage.getItem("model") ?? "");
 
     const functions = ref(localStorage.getItem("functions") ?? "[]");
     const actions = ref(localStorage.getItem("actions") ?? "{}");
@@ -195,6 +196,9 @@ export default defineComponent({
     watch(temperature, () => {
       localStorage.setItem("temperature", temperature.value);
     });
+    watch(model, () => {
+      localStorage.setItem("model", model.value);
+    });
     watch(functions, () => {
       localStorage.setItem("functions", functions.value);
     });
@@ -245,6 +249,7 @@ export default defineComponent({
       description,
       prompt,
       temperature,
+      model,
       functions,
       actions,
 

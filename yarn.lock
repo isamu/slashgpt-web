@@ -2716,7 +2716,7 @@ slash@^3.0.0:
 
 "slashgpt@https://github.com/isamu/slashgpt-js.git":
   version "0.0.4"
-  resolved "https://github.com/isamu/slashgpt-js.git#64498064533212b27d3dbc41ece9635864a9294f"
+  resolved "https://github.com/isamu/slashgpt-js.git#a32693a0b8024b9e73bbdc9d63c9617a0c42a186"
   dependencies:
     graphql "^16.8.1"
     graphql-request "^6.1.0"
