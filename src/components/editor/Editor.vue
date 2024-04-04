@@ -30,6 +30,7 @@
 
         <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" @removeActionsElement="removeActionsElement" />
         <div class="text-left font-bold mt-2">Actions</div>
+        <ActionEditor v-model="actions" />
         <div>
           <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="actions" rows="10"></textarea>
         </div>
@@ -82,11 +83,12 @@ import { ManifestData } from "slashgpt";
 
 import ChatMessage from "@/components/editor/ChatMessage.vue";
 import FunctionEditor from "@/components/editor/FunctionEditor.vue";
-
+import ActionEditor from "@/components/editor/ActionEditor.vue";
 export default defineComponent({
   components: {
     ChatMessage,
     FunctionEditor,
+    ActionEditor,
   },
   setup() {
     const apiKey = ref(localStorage.getItem("apiKey") ?? "");
@@ -145,6 +147,7 @@ export default defineComponent({
       rest: {
         type: "rest",
         url: "",
+        method: "GET",
       },
       graphql: {
         type: "graphQL",
