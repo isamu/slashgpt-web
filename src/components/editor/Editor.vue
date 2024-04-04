@@ -16,7 +16,7 @@
           </div>
         </div>
         <div>
-          <div class="text-left font-bold">Prompt</div>
+          <div class="text-left font-bold">System Prompt</div>
           <div>
             <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
           </div>
@@ -205,8 +205,8 @@ export default defineComponent({
       localStorage.setItem("sample", sample.value);
     });
 
+    // from view
     const updateData = (data: { [key: string]: string }) => {
-      // const { title, description, prompt, temperature, functions, actions } = data.manifest;
       title.value = data.manifest.title || "";
       description.value = data.manifest.description || "";
       prompt.value = data.manifest.prompt.join("\n") || "";
@@ -214,6 +214,8 @@ export default defineComponent({
       functions.value = JSON.stringify(data.manifest.functions, null, "\t") || "";
       actions.value = JSON.stringify(data.manifest.actions, null, "\t") || "";
       sample.value = data.manifest.sample || "";
+
+      chatMessageRef.value.userInput = "";
     };
 
     const setSample = () => {
