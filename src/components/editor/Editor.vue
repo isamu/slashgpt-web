@@ -31,7 +31,15 @@
         <FunctionEditor v-model="functions" @addActionsElement="addActionsElement" @removeActionsElement="removeActionsElement" />
         <div class="text-left font-bold mt-2">Actions</div>
         <ActionEditor v-model="actions" />
+
+        <div>
+          <div class="text-left font-bold">Model</div>
+          <div>
+            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="model" />
+          </div>
+        </div>
       </div>
+
       <div class="m-2">
         <button @click="download" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Download manifest</button>
       </div>
@@ -97,7 +105,7 @@ export default defineComponent({
     const description = ref(localStorage.getItem("description") ?? "");
     const prompt = ref(localStorage.getItem("prompt") ?? "");
     const temperature = ref(localStorage.getItem("temperature") ?? "");
-    const model = ref(localStorage.getItem("model") ?? "");
+    const model = ref(localStorage.getItem("model") ?? "gpt-3.5-turbo");
 
     const functions = ref(localStorage.getItem("functions") ?? "[]");
     const actions = ref(localStorage.getItem("actions") ?? "{}");
@@ -139,6 +147,7 @@ export default defineComponent({
         about: "",
         bot: "",
         temperature: 0.7,
+        model: model.value,
         actions: actions_object.value,
         functions: function_object.value,
         sample: sample.value,
@@ -238,6 +247,7 @@ export default defineComponent({
       title.value = "";
       description.value = "";
       prompt.value = "";
+      model.value = "gpt-3.5-turbo";
       temperature.value = "";
       functions.value = "[]";
       actions.value = "{}";

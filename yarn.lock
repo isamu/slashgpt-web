@@ -12,6 +12,20 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@anthropic-ai/sdk@^0.19.1":
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.19.2.tgz#69707a6c844a56bc3fb524458a84f1570471507e"
+  integrity sha512-lsMl7IOFpFCZKUbNdLR0bYN8bevAmvw1Ak79Pp9RIFMwU6nMsMiWWhuBqccK8wi25h6skWE/lY/c0x29rEJFMw==
+  dependencies:
+    "@types/node" "^18.11.18"
+    "@types/node-fetch" "^2.6.4"
+    abort-controller "^3.0.0"
+    agentkeepalive "^4.2.1"
+    form-data-encoder "1.7.2"
+    formdata-node "^4.3.2"
+    node-fetch "^2.6.7"
+    web-streams-polyfill "^3.2.1"
+
 "@babel/code-frame@^7.12.13":
   version "7.23.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.23.5.tgz#9009b69a8c602293476ad598ff53e4562e15c244"
@@ -2716,8 +2730,9 @@ slash@^3.0.0:
 
 "slashgpt@https://github.com/isamu/slashgpt-js.git":
   version "0.0.4"
-  resolved "https://github.com/isamu/slashgpt-js.git#a32693a0b8024b9e73bbdc9d63c9617a0c42a186"
+  resolved "https://github.com/isamu/slashgpt-js.git#99b069c57c54b870faadf816da52f2d91a5e73ce"
   dependencies:
+    "@anthropic-ai/sdk" "^0.19.1"
     graphql "^16.8.1"
     graphql-request "^6.1.0"
     openai "^4.12.4"
