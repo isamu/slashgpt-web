@@ -116,14 +116,14 @@ export default defineComponent({
     const function_object = computed(() => {
       try {
         return JSON.parse(functions.value);
-      } catch (e) {
+      } catch {
         return {};
       }
     });
     const actions_object = computed(() => {
       try {
         return JSON.parse(actions.value);
-      } catch (e) {
+      } catch {
         return {};
       }
     });

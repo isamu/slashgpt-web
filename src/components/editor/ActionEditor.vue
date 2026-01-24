@@ -39,7 +39,7 @@ export default defineComponent({
       () => {
         try {
           actions.value = JSON.parse(modelValue.value);
-        } catch (e) {
+        } catch {
           actions.value = {};
         }
       },

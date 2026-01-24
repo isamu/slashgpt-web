@@ -27,8 +27,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { call_llm } from "@/utils/llm";
-import { ChatHistory } from "slashgpt";
+import { call_llm } from "../../utils/llm";
+import { ChatHistory, ChatData } from "slashgpt";
 
 export default defineComponent({
   props: {
