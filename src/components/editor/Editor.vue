@@ -153,7 +153,7 @@ export default defineComponent({
         sample: sample.value,
       } as ManifestData;
     });
-    const defautlAction = {
+    const defautlAction: Record<string, Record<string, string>> = {
       rest: {
         type: "rest",
         url: "",
@@ -219,10 +219,21 @@ export default defineComponent({
     });
 
     // from view
-    const updateData = (data: { [key: string]: string }) => {
+    interface UpdateDataInput {
+      manifest: {
+        title?: string;
+        description?: string;
+        prompt?: string[];
+        temperature?: number;
+        functions?: unknown[];
+        actions?: Record<string, unknown>;
+        sample?: string;
+      };
+    }
+    const updateData = (data: UpdateDataInput) => {
       title.value = data.manifest.title || "";
       description.value = data.manifest.description || "";
-      prompt.value = data.manifest.prompt.join("\n") || "";
+      prompt.value = (data.manifest.prompt || []).join("\n") || "";
       temperature.value = String(data.manifest.temperature || 0.7);
       functions.value = JSON.stringify(data.manifest.functions, null, "\t") || "";
       actions.value = JSON.stringify(data.manifest.actions, null, "\t") || "";

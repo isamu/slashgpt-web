@@ -9,6 +9,10 @@ export default defineConfig({
     checker({
       typescript: true,
       overlay: false,
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{js,ts,vue}"',
+        useFlatConfig: true,
+      },
     }),
   ],
   resolve: {

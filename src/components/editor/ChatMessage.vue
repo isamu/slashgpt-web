@@ -26,9 +26,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watch, type PropType } from "vue";
 import { call_llm } from "../../utils/llm";
-import { ChatHistory, ChatData } from "slashgpt";
+import { ChatHistory, ChatData, ManifestData } from "slashgpt";
 
 export default defineComponent({
   props: {
@@ -37,8 +37,8 @@ export default defineComponent({
       default: "",
     },
     manifest: {
-      type: Object,
-      default: () => {},
+      type: Object as PropType<ManifestData>,
+      required: true,
     },
   },
   setup(props) {

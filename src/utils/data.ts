@@ -161,7 +161,22 @@ const news = {
   },
 };
 */
-export const dataSet = {
+interface ManifestWrapper {
+  manifest: {
+    title: string;
+    prompt?: string[];
+    about?: string;
+    description?: string;
+    bot?: string;
+    temperature?: number;
+    actions?: Record<string, unknown>;
+    functions?: unknown[];
+    sample?: string;
+    skip_function_result?: boolean;
+  };
+}
+
+export const dataSet: Record<string, ManifestWrapper> = {
   game,
   paper,
 };

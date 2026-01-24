@@ -36,6 +36,21 @@ import { defineComponent, ref, watch, toRefs } from "vue";
 import FunctionNewModal from "@/components/editor/functions/FunctionNewModal.vue";
 import FunctionParamModal from "@/components/editor/functions/FunctionParamModal.vue";
 
+interface FunctionParam {
+  type: string;
+  description: string;
+}
+
+interface FunctionDefinition {
+  name: string;
+  description: string;
+  parameters: {
+    type: string;
+    properties: Record<string, FunctionParam>;
+    required?: string[];
+  };
+}
+
 export default defineComponent({
   components: {
     FunctionNewModal,
@@ -49,7 +64,7 @@ export default defineComponent({
   },
   emits: ["update:modelValue", "addActionsElement", "removeActionsElement"],
   setup(props, { emit }) {
-    const functions = ref([]);
+    const functions = ref<FunctionDefinition[]>([]);
     const { modelValue } = toRefs(props);
 
     watch(
@@ -74,8 +89,10 @@ export default defineComponent({
 
     const currentMethodKey = ref(0);
     const isOpenParamNew = ref(false);
-    const toggleAddParam = (key: number) => {
-      currentMethodKey.value = key;
+    const toggleAddParam = (key?: number) => {
+      if (key !== undefined) {
+        currentMethodKey.value = key;
+      }
       isOpenParamNew.value = !isOpenParamNew.value;
     };
     const addFunctionMethod = (params: { name: string; actionType: string }) => {

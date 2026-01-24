@@ -23,6 +23,10 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch, toRefs } from "vue";
+
+type ActionValue = Record<string, string>;
+type ActionsType = Record<string, ActionValue>;
+
 export default defineComponent({
   props: {
     modelValue: {
@@ -32,7 +36,7 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const actions = ref({});
+    const actions = ref<ActionsType>({});
     const { modelValue } = toRefs(props);
     watch(
       modelValue,
