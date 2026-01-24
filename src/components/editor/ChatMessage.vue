@@ -13,13 +13,13 @@
           </div>
         </div>
         <div>
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="userInput" rows="5"></textarea>
+          <textarea class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="userInput" rows="5"></textarea>
         </div>
       </div>
       <input type="checkbox" v-model="save_history" />History
     </div>
     <div>
-      <button @click="send" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400" :disabled="isLoading">
+      <button @click="send" class="flex-grow p-2 border-1 rounded-md mt-2 w-full bg-blue-400" :disabled="isLoading">
         {{ isLoading ? "Loading..." : "Send" }}
       </button>
     </div>

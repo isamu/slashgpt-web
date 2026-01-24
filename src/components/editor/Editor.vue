@@ -6,25 +6,25 @@
         <div>
           <div class="text-left font-bold">Title</div>
           <div>
-            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="title" />
+            <input class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="title" />
           </div>
         </div>
         <div>
           <div class="text-left font-bold">Description</div>
           <div>
-            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="description"></textarea>
+            <textarea class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="description"></textarea>
           </div>
         </div>
         <div>
           <div class="text-left font-bold">System Prompt</div>
           <div>
-            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
+            <textarea class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="prompt" rows="10"></textarea>
           </div>
         </div>
         <div>
           <div class="text-left font-bold">Temperature</div>
           <div>
-            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="temperature" />
+            <input class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="temperature" />
           </div>
         </div>
 
@@ -35,34 +35,34 @@
         <div>
           <div class="text-left font-bold">Model</div>
           <div>
-            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="model" />
+            <input class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="model" />
           </div>
         </div>
       </div>
 
       <div class="m-2">
-        <button @click="download" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Download manifest</button>
+        <button @click="download" class="flex-grow p-2 border-1 rounded-md mt-2 w-full bg-blue-400">Download manifest</button>
       </div>
 
       <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div>
           <div class="text-left"><span class="font-bold">OpenAI API key</span><span class="text-xs">(ブラウザに保存します)</span></div>
           <div>
-            <input class="flex-grow p-2 border rounded-md mt-2 w-full" v-model="apiKey" />
+            <input class="flex-grow p-2 border-1 rounded-md mt-2 w-full" v-model="apiKey" />
           </div>
         </div>
       </div>
       <div class="m-2">
-        <button @click="clearData" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Clear Data</button>
+        <button @click="clearData" class="flex-grow p-2 border-1 rounded-md mt-2 w-full bg-blue-400">Clear Data</button>
       </div>
       <div class="border-2 p-2 m-2 rounded-xl border-2">
         <div v-if="true">
           Debug View (read only)<br />
           manifest<br />
-          <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
+          <textarea class="flex-grow p-2 border-1 rounded-md mt-2 w-full" :value="JSON.stringify(manifest, null, '\t')" rows="20" />
           Function:
-          <div class="flex-grow p-2 border rounded-md mt-2 w-full text-left">
-            <textarea class="flex-grow p-2 border rounded-md mt-2 w-full" :value="JSON.stringify(JSON.parse(functions), null, '\t')" rows="20" />
+          <div class="flex-grow p-2 border-1 rounded-md mt-2 w-full text-left">
+            <textarea class="flex-grow p-2 border-1 rounded-md mt-2 w-full" :value="JSON.stringify(JSON.parse(functions), null, '\t')" rows="20" />
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
         <div>
           {{ manifest.sample }}
         </div>
-        <button @click="setSample" class="flex-grow p-2 border rounded-md mt-2 w-full bg-blue-400">Set Sample</button>
+        <button @click="setSample" class="flex-grow p-2 border-1 rounded-md mt-2 w-full bg-blue-400">Set Sample</button>
       </div>
     </div>
   </div>

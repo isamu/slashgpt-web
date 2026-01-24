@@ -2,10 +2,10 @@
   <div>
     <Modal @closeModal="closeModal">
       <div class="text-left">
-        <div><span class="font-bold">Name</span>: <input v-model="inputName" class="p-2 border rounded-md mt-2" /></div>
+        <div><span class="font-bold">Name</span>: <input v-model="inputName" class="p-2 border-1 rounded-md mt-2" /></div>
         <div>
           <span class="font-bold">DataType</span>:
-          <select v-model="selectedParamValue" class="border rounded-md p-2 m-2">
+          <select v-model="selectedParamValue" class="border-1 rounded-md p-2 m-2">
             <option v-for="(option, index) in functionParametersTypes" :value="option" :key="index">
               {{ option }}
             </option>
@@ -14,7 +14,7 @@
       </div>
       <div>
         <div>
-          <button @click="addFunctionParam" class="border rounded-md p-2 m-2">Add</button>
+          <button @click="addFunctionParam" class="border-1 rounded-md p-2 m-2">Add</button>
         </div>
       </div>
     </Modal>

@@ -6,23 +6,23 @@
       </div>
     </div>
 
-    <div v-for="(func, k) in functions" class="text-left border rounded-md p-2 mb-2" :key="k">
+    <div v-for="(func, k) in functions" class="text-left border-1 rounded-md p-2 mb-2" :key="k">
       <div>
         <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunctionMethod(k)">remove_circle </span>
-        <span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border rounded-md mt-2" />
+        <span class="font-bold">Name</span>: <input v-model="func.name" class="flex-grow p-2 border-1 rounded-md mt-2" />
       </div>
-      <div><span class="font-bold">Description</span>: <input v-model="func.description" class="flex-grow p-2 border rounded-md mt-2" /></div>
+      <div><span class="font-bold">Description</span>: <input v-model="func.description" class="flex-grow p-2 border-1 rounded-md mt-2" /></div>
       <div>
         <span class="font-bold">Parameters</span>:<span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="toggleAddParam(k)"
           >add_circle
         </span>
-        <div v-for="(prop, j) in Object.keys(func.parameters.properties || {})" :key="j" class="flex-grow p-2 border rounded-md mt-2">
+        <div v-for="(prop, j) in Object.keys(func.parameters.properties || {})" :key="j" class="flex-grow p-2 border-1 rounded-md mt-2">
           <div>
             <span class="material-icons text-warmgray-600 mr-2 text-lg cursor-pointer" @click="removeFunctionParam(k, prop)">remove_circle </span>
             Name: {{ prop }}
           </div>
           <div>Type: {{ func.parameters.properties[prop].type }}</div>
-          <div>Description: <input v-model="func.parameters.properties[prop].description" class="flex-grow p-2 border rounded-md mt-2" /></div>
+          <div>Description: <input v-model="func.parameters.properties[prop].description" class="flex-grow p-2 border-1 rounded-md mt-2" /></div>
         </div>
       </div>
     </div>
